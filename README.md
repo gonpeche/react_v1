@@ -86,6 +86,12 @@ module.exports = {
   context: __dirname,
   // Genera un error stack en base a nuestros archivos y no al bundle(que sería inentendible)
   devtool: 'source-map',
+  // aqui le queremos decir que resuelva los archivos que tienen extensiones .js y .jsx
+  // sin necesidad de aclarar la extension para que podamos hacer:
+  // var Main = require('./Main') en archivos jsx también
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   // Aquí es donde especificamos que tipo de sintaxis especial webpack debería buscar.
   module: {
     // Loaders son modulos node especiales que hemos instalado que saben como parsear cierta sintaxis
@@ -100,7 +106,7 @@ module.exports = {
         // Si llegamos a hacer esto nosotros mismos, buildear nuestro bundle.js llevaría mucho!
         exclude: /(node_modules|bower_components)/,
         // Estamos usando el modulo babel-loader para leer nuestros archivos - puede manejar ambos ES6 y JSX!
-        loader: 'babel',
+        loader: 'babel-loader',
         // Aquí le decimos a webpack que busque por cualquier sintaxis de ES6 y JSX.
         //Si la encuentra, el babel-loaderva a transpilarlo por nosotros!
         query: {
@@ -175,21 +181,21 @@ import baz, { foo, bar } from './ourExports.js';
 
 ### Cargando nuestro JS
 
- Anda a la página http://localhost:1337/. Deberías ver un layout simple con un sidebar, un area para el contenido principal, y un footer.
+Anda a la página http://localhost:1337/. Deberías ver un layout simple con un sidebar, un area para el contenido principal, y un footer.
 
- Ahora mismo esto no es nada mas que HTML estático, pero vamos a usar React para renderizar nuestra vista en cambio! Abre `browser/index.html` y comentá todo de `<body>` por ahora, y solo incluí un div vacio, como este:
+Ahora mismo esto no es nada mas que HTML estático, pero vamos a usar React para renderizar nuestra vista en cambio! Abre `browser/index.html` y comentá todo de `<body>` por ahora, y solo incluí un div vacio, como este:
 
- ```html
- <div id="app"></div>
- ```
+```html
+<div id="app"></div>
+```
 
- Asegurate de darle el id "app". Cuando nuestro código de React corrá, va a encontrar este div y renderizar nuestro view en él!
+Asegurate de darle el id "app". Cuando nuestro código de React corrá, va a encontrar este div y renderizar nuestro view en él!
 
- Para poner nuestro código, necesitamos poner un `script` tag al path de nuestro `bundle.js`. Recordá de agregar el tag al final del body.
+Para poner nuestro código, necesitamos poner un `script` tag al path de nuestro `bundle.js`. Recordá de agregar el tag al final del body.
 
- ```html
- <script src="/bundle.js"></script>
- ```
+```html
+<script src="/bundle.js"></script>
+```
 
 Matá el servidor, y corre `npm start` otra vez. Si el sidebar y footer desaparecen y ves las palabras 'Hello React' loggeado en la consola del cliente, entonces estas listo para continuar!
 
@@ -568,32 +574,6 @@ Segundo, dentro de el método `componentDidMount` de nuestro componente  vamos a
 También, notá que el estado lo debería tener nuestro componente `Main`y no el componente `Albums`. La razón de eso es que no sabemos todavía si va a haber otros componentes que `Main` renderize que vayan a necesitar también a los albumes, por lo que es siempre más seguro de mantener nuestro estado ["arriba en nuestro árbol de componentes"](https://reactjs.org/docs/react-component.html), por lo menos hasta que sepamos que es seguro moverlo abajo.
 +++ 
 
-Algo esta indudablemente roto ahora, el cover art del album. Nuestro `img src` esta seteado a `{album.imageUrl}` pero no hay una `.imageUrl` en la verdadera data del album. Hay un número de formas de resolver este problema. Fijate que se te ocurre, y refierete a la solucion de abajo si te trabas o no podes contener tu curiosidad.
-
-|||
-Recuerda que cada cover del album esta disponible en `/api/albums/:albumId/image`. No necesitamos que la base de datos nos de la imageUrl para un album cuyo ID ya sabemos; podemos simplemente setear `.imageUrl` nosotros mismos en la data que seteamos en el estado:
-
-```js
-...
-
-axios.get('/api/albums')
-  .then(res => { 
-    return res.data; 
-  })
-  .then(albumsFromServer => {
-    albumsFromServer = albumsFromServer.map(album => {
-      album.imageUrl = `/api/albums/${album.id}/image`;
-      return album;
-    });
-    this.setState({ albums: albumsFromServer });
-  });
-  
-...
-```
-
-Alternativamente podríamos haber modificado nuestro backend para crear un `imageUrl` virtual... pero estamos intentando aprender React aquí, por lo que es bueno saber que podemos arreglar el problema en el cliente.
-
-|||
 
 ## Cambiando Vistas
 
@@ -708,6 +688,17 @@ handleClick (albumId) {
 ```
 Una vez que tenes el album, completa el resto del JSX para mostrar la información de las canciones (asegurate de mapear sobre cada canción en el arreglo de canciones del album!)
 
++++Error al mapear las canciones
+Es probable que cuando intentas mapear las canciones del album te aparezca un error que no puede leer la propiedad `map` de `undefined` esto es porque cuando no tenemos una canción seleccionda la propiedad songs no existe, por lo que vas a tener que chequear si esa propiedad existe antes de mapearla
++++
+
++++Mas ayuda por favor
+Primero nos fijamos si esapropiedad existe y luego le hacemos un map.
+```js
+{this.props.album.songs && this.props.album.songs.map(...)}
+```
++++
+
 |||
 
 ### Cambiar Vista
@@ -734,7 +725,7 @@ Genial, nuestra vista esta cambiando! Pero... al parecer no podemos ir para atra
 
 ### Play Audio
 
-Si llegaste tan lejos y entendes los conceptos cuviertos hasta ahora, entonces **buen trabajo**! Diría que estas bastante buena forma con los fundamentos de React! Por esta razón, la siguiente sección va a ser un poco más difícil y va ver menos lineamientos.
+Si llegaste tan lejos y entendes los conceptos cubiertos hasta ahora, entonces **buen trabajo**! Diría que estas bastante buena forma con los fundamentos de React! Por esta razón, la siguiente sección va a ser un poco más difícil y va ver menos lineamientos.
 
 ---
 
@@ -810,14 +801,6 @@ Ahora hazlo de tal forma que cada botón de play reproduzca la cancion que corre
 Más facil decirlo que hacerlo? Hay dos grandes pasos:
 
 1. Localiza la fuente de audio de cada canción.
-
-+++Aproximación
-Realmente este problema no es muy distinto del caso del cover art faltante. Solamente necesitamos identificar el URL correcto y transformar la data que estemos agregando a nuestro estado para que tenga las propiedades correctas.
-+++
-
-+++Más ayuda por favor!
-Fijate en `server/app/routes/songs.js`. Hay rutas ahí que podemos usar para servir el audio correcto. Si el `audio.src` esta seteado a esa ruta, va a requerir el audio apropiadamente cuando hagas `audio.load`.
-+++
 
 2. Haz ahora que cuando clickees "play" cause que el audio correcto se reproduzca
 
