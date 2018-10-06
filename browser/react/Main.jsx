@@ -65,7 +65,7 @@ class Main extends React.Component {
             album: fakeAlbums
         }
     }
-    
+
     render() {
         return (
         <div id="main" className="container-fluid">
@@ -85,9 +85,9 @@ class Main extends React.Component {
                         <img src="http://placeholdit.imgix.net/~text?txtsize=33&txt=ALBUMoneIMAGE&w=300&h=300" />
                         <div className="caption">
                         <h5>
-                            <span>ALBUM ONE NAME HERE</span>
+                            <span>{this.state.album[0].name}</span>
                         </h5>
-                        <small>NUMBER OF SONGS HERE songs</small>
+                        <small>{this.state.album[0].songs[0].name}</small>
                         </div>
                     </a>
                     </div>

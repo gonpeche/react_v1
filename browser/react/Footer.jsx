@@ -1,7 +1,7 @@
 var React = require('react');
 
 const Footer = function () {
-    return (<footer>
+    return <footer>
         <div className="pull-left">
           <button className="btn btn-default">
             <span className="glyphicon glyphicon-step-backward"></span>
@@ -18,7 +18,7 @@ const Footer = function () {
             <div className="progress-bar"></div>
           </div>
         </div>
-        </footer>)
+        </footer>
 }
 
 export default Footer
