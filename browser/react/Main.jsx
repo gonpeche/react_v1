@@ -1,9 +1,7 @@
-// var React = require('react');
 import React, { Component } from 'react';
-
 import Sidebar from './Sidebar.jsx'
 import Footer from './Footer.jsx'
-
+import Albums from './Albums.jsx'
 
 const fakeAlbums = [
 {
@@ -69,41 +67,13 @@ class Main extends Component {
     }
 
     render() {
-        return (
+        return (  
             <div>
-
                     <Sidebar/>
-                        
-                        <div className="col-xs-10">
-                            <div className="albums">
-                            <h3>Albums</h3>
-                            <div className="row">
-                            {
-                                this.state.album.map(function (album) {
-                                   return (
-                                       <div className="col-xs-4">
-                                            <a className="thumbnail" href="#">
-                                                <img src="http://placeholdit.imgix.net/~text?txtsize=33&txt=ALBUMoneIMAGE&w=300&h=300" />
-                                                <div className="caption">
-                                                    <h5>
-                                                        <span>{album.name}</span>
-                                                    </h5>
-                                                    <small>{album.songs.length}</small>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                   ) 
-                                })
-                            }
-                         
-                            </div>
-                            </div>
-                    </div>
-
+                    <Albums album={this.state.album}/>
                     <Footer/>
 
-                </div>
+             </div>
         )
     }; 
 }
