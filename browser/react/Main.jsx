@@ -70,7 +70,7 @@ class Main extends Component {
 
     render() {
         return (
-            <div id="main" className="container-fluid">
+            <div>
 
                     <Sidebar/>
                         
@@ -78,28 +78,25 @@ class Main extends Component {
                             <div className="albums">
                             <h3>Albums</h3>
                             <div className="row">
-                                <div className="col-xs-4">
-                                    <a className="thumbnail" href="#">
-                                        <img src="http://placeholdit.imgix.net/~text?txtsize=33&txt=ALBUMoneIMAGE&w=300&h=300" />
-                                        <div className="caption">
-                                            <h5>
-                                                <span>{this.state.album[0].name}</span>
-                                            </h5>
-                                            <small>{this.state.album[0].songs[0].name}</small>
+                            {
+                                this.state.album.map(function (album) {
+                                   return (
+                                       <div className="col-xs-4">
+                                            <a className="thumbnail" href="#">
+                                                <img src="http://placeholdit.imgix.net/~text?txtsize=33&txt=ALBUMoneIMAGE&w=300&h=300" />
+                                                <div className="caption">
+                                                    <h5>
+                                                        <span>{album.name}</span>
+                                                    </h5>
+                                                    <small>{album.songs.length}</small>
+                                                </div>
+                                            </a>
                                         </div>
-                                    </a>
-                                </div>
-                                <div className="col-xs-4">
-                                    <a className="thumbnail" href="#">
-                                        <img src="http://placeholdit.imgix.net/~text?txtsize=33&txt=ALBUMtwoIMAGE&w=300&h=300" />
-                                        <div className="caption">
-                                            <h5>
-                                                <span>{this.state.album[1].name}</span>
-                                            </h5>
-                                            <small>{this.state.album[1].songs[0].name}</small>
-                                        </div>
-                                    </a>
-                                </div>
+
+                                   ) 
+                                })
+                            }
+                         
                             </div>
                             </div>
                     </div>
