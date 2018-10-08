@@ -48,13 +48,14 @@ class Main extends Component {
     render() {
         return (  
             <div id="main" className="container-fluid">
-
-                <Sidebar reset={this.reset}/>  
+                 <div className="col-xs-2">
+                    <Sidebar reset={this.reset}/> 
+                 </div> 
 
                 {
                     Object.keys(this.state.selectedAlbums).length ?
                     <SingleAlbum singleAlbum={this.state.selectedAlbums}/> : 
-                    <Albums album={this.state.albums} handleClick={this.handleClick}/> 
+                    <Albums start={this.play} album={this.state.albums} handleClick={this.handleClick}/> 
                 }
                
                 
