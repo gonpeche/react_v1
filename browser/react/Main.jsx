@@ -5,6 +5,7 @@ import Albums from './Albums.jsx'
 import axios from 'axios';
 import SingleAlbum from './SingleAlbum'
 
+const audio = document.createElement('audio')
 
 class Main extends Component {
 
@@ -39,8 +40,8 @@ class Main extends Component {
         })
     }
 
-    play() {
-        audio.src = 'https://learndotresources.s3.amazonaws.com/workshop/5616dbe5a561920300b10cd7/Dexter_Britain_-_03_-_The_Stars_Are_Out_Interlude.mp3';
+    play(song) {
+        audio.src = song;
         audio.load();
         audio.play();
     }
@@ -48,18 +49,18 @@ class Main extends Component {
     render() {
         return (  
             <div id="main" className="container-fluid">
+
                  <div className="col-xs-2">
                     <Sidebar reset={this.reset}/> 
                  </div> 
 
                 {
                     Object.keys(this.state.selectedAlbums).length ?
-                    <SingleAlbum singleAlbum={this.state.selectedAlbums}/> : 
-                    <Albums start={this.play} album={this.state.albums} handleClick={this.handleClick}/> 
+                    <SingleAlbum play={this.play} singleAlbum={this.state.selectedAlbums}/> : 
+                    <Albums play={this.play} album={this.state.albums} handleClick={this.handleClick}/> 
                 }
                
-                
-                <Footer/>
+                <Footer play={this.play}/>
             </div>
         )
     }; 

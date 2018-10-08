@@ -6,7 +6,7 @@ const Footer = function (props) {
           <button className="btn btn-default">
             <span className="glyphicon glyphicon-step-backward"></span>
           </button>
-          <button onClick={props.start} className="btn btn-default">
+          <button onClick={() => props.play()} className="btn btn-default">
             <span className="glyphicon glyphicon-play"></span>
           </button>
           <button className="btn btn-default">

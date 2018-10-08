@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 
-// <div class="col-xs-10">
-// Hola soy JUKE! Ahora soy una página HTML estática. Pero con tu ayuda y React, voy a poder reaccionar a cambios.
-// </div>
 class SingleAlbum extends Component {
     render () {
         return (
@@ -29,7 +26,9 @@ class SingleAlbum extends Component {
                                     return (
                                                 <tr key={album.id}>
                                                     <td>
-                                                        <button className="btn btn-default btn-xs">
+                                                        <button onClick={() => {
+                                                            this.props.play(album.audioUrl);
+                                                        }} className="btn btn-default btn-xs">
                                                             <span className="glyphicon glyphicon-play"></span>
                                                         </button>
                                                     </td>
