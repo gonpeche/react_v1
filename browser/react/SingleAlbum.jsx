@@ -31,10 +31,6 @@ class SingleAlbum extends Component {
                                                             this.props.play(album);
                                                         }} className="btn btn-default btn-xs">
 
-                                                            {
-                                                                
-                                                            }
-
                                                             <span className="glyphicon glyphicon-play"></span>
                                                         </button>
                                                     </td>
