@@ -15,7 +15,6 @@ class Albums extends Component {
                                 
                                 <div key={album.id} className="col-xs-4">
                                         <a onClick={() => this.props.handleClick(album.id)} className="thumbnail" href="#">
-                                        
                                             <img src={album.imageUrl} />
                                             <div className="caption">
                                                 <h5>

@@ -13,11 +13,13 @@ class Main extends Component {
         super(props)
         this.state = {
             albums: [],
-            selectedAlbums: {}
+            selectedAlbums: {},
+            currentSong: {}
         }
         this.handleClick = this.handleClick.bind(this)
         this.reset = this.reset.bind(this)
-        this.play = this.play.bind(this)
+        this.start = this.start.bind(this)
+        this.currentSong = this.currentSong.bind(this)
     }
 
     componentDidMount() {
@@ -40,10 +42,17 @@ class Main extends Component {
         })
     }
 
-    play(song) {
-        audio.src = song;
+    start(song) {
+        this.currentSong(song)
+        audio.src = song.audioUrl;
         audio.load();
         audio.play();
+    }
+
+    currentSong (song) {
+        this.setState({
+            currentSong: song.id
+        })
     }
 
     render() {
@@ -56,11 +65,11 @@ class Main extends Component {
 
                 {
                     Object.keys(this.state.selectedAlbums).length ?
-                    <SingleAlbum play={this.play} singleAlbum={this.state.selectedAlbums}/> : 
-                    <Albums play={this.play} album={this.state.albums} handleClick={this.handleClick}/> 
+                    <SingleAlbum currentSong={this.state.currentSong} play={this.start} singleAlbum={this.state.selectedAlbums}/> : 
+                    <Albums play={this.start} album={this.state.albums} handleClick={this.handleClick}/> 
                 }
                
-                <Footer play={this.play}/>
+                <Footer play={this.start}/>
             </div>
         )
     }; 

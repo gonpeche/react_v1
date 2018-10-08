@@ -7,7 +7,7 @@ class SingleAlbum extends Component {
                 <div className="album">
                     <div>
                         <h3>{this.props.singleAlbum.name}</h3>
-                        <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=IshouldBEanIMAGE&w=300&h=300" className="img-thumbnail" />
+                        <img src={this.props.singleAlbum.imageUrl} className="img-thumbnail" />
                     </div>
                     <table className='table'>
                         <thead>
@@ -24,11 +24,17 @@ class SingleAlbum extends Component {
                                 this.props.singleAlbum.songs && this.props.singleAlbum.songs.map( 
                                     album => {
                                     return (
-                                                <tr key={album.id}>
+                                                <tr className={album.id === this.props.currentSong ? 'active' : ''} key={album.id}>
                                                     <td>
+                                                 
                                                         <button onClick={() => {
-                                                            this.props.play(album.audioUrl);
+                                                            this.props.play(album);
                                                         }} className="btn btn-default btn-xs">
+
+                                                            {
+                                                                
+                                                            }
+
                                                             <span className="glyphicon glyphicon-play"></span>
                                                         </button>
                                                     </td>
