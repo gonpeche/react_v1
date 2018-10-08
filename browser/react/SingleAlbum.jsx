@@ -31,7 +31,6 @@ class SingleAlbum extends Component {
                                                 </td>
                                                 <td>{album.name}</td>
                                                 <td>I SHOULD BE A STRING OF THIS SONG'S ARTISTS</td>
-                                                {console.log(album.artists)}
                                                 <td>{album.genre}</td>
                                             </tr>
                                         )

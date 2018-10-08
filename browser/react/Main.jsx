@@ -15,6 +15,8 @@ class Main extends Component {
             selectedAlbums: {}
         }
         this.handleClick = this.handleClick.bind(this)
+        this.reset = this.reset.bind(this)
+        this.play = this.play.bind(this)
     }
 
     componentDidMount() {
@@ -31,11 +33,23 @@ class Main extends Component {
         .catch( e => console.log(e))
     }
     
+    reset() {
+        this.setState({
+            selectedAlbums: {}
+        })
+    }
+
+    play() {
+        audio.src = 'https://learndotresources.s3.amazonaws.com/workshop/5616dbe5a561920300b10cd7/Dexter_Britain_-_03_-_The_Stars_Are_Out_Interlude.mp3';
+        audio.load();
+        audio.play();
+    }
+
     render() {
         return (  
             <div id="main" className="container-fluid">
 
-                <Sidebar/>  
+                <Sidebar reset={this.reset}/>  
 
                 {
                     Object.keys(this.state.selectedAlbums).length ?
