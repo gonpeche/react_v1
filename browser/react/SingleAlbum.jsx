@@ -5,7 +5,7 @@ class SingleAlbum extends Component {
         return (
             <div className="album">
                 <div>
-                    <h3>I SHOULD BE AN ALBUM NAME</h3>
+                    <h3>{this.props.singleAlbum.name}</h3>
                     <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=IshouldBEanIMAGE&w=300&h=300" className="img-thumbnail" />
                 </div>
                 <table className='table'>
@@ -18,29 +18,31 @@ class SingleAlbum extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                        <button className="btn btn-default btn-xs">
-                            <span className="glyphicon glyphicon-play"></span>
-                        </button>
-                        </td>
-                        <td>I SHOULD BE A SONG NAME</td>
-                        <td>I SHOULD BE A STRING OF THIS SONG'S ARTISTS</td>
-                        <td>I SHOULD BE A SONG GENRE</td>
-                    </tr>
-                    <tr>
-                        <td>
-                        <button className="btn btn-default btn-xs">
-                            <span className="glyphicon glyphicon-play"></span>
-                        </button>
-                        </td>
-                        <td>I SHOULD BE ANOTHER SONG NAME</td>
-                        <td>I SHOULD BE A STRING OF THAT SONG'S ARTISTS</td>
-                        <td>I SHOULD BE A SONG GENRE</td>
-                    </tr>
+                    
+                        {
+                            this.props.singleAlbum.songs && this.props.singleAlbum.songs.map( 
+                                album => {
+                                return (
+                                            <tr key={album.id}>
+                                                <td>
+                                                    <button className="btn btn-default btn-xs">
+                                                        <span className="glyphicon glyphicon-play"></span>
+                                                    </button>
+                                                </td>
+                                                <td>{album.name}</td>
+                                                <td>I SHOULD BE A STRING OF THIS SONG'S ARTISTS</td>
+                                                {console.log(album.artists)}
+                                                <td>{album.genre}</td>
+                                            </tr>
+                                        )
+                                })
+                        }
+              
                     </tbody>
                 </table>
             </div>
         )
     }
 }
+
+export default SingleAlbum;

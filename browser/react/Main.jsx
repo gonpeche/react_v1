@@ -11,8 +11,10 @@ class Main extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            albums: []
+            albums: [],
+            selectedAlbums: {}
         }
+        this.handleClick = this.handleClick.bind(this)
     }
 
     componentDidMount() {
@@ -22,14 +24,21 @@ class Main extends Component {
         .catch( e => console.log(e))
     }
 
+    handleClick(albumID) {
+        axios.get(`/api/albums/${albumID}`)
+        .then(res => res.data)
+        .then(album => this.setState({selectedAlbums: album}))
+        .catch( e => console.log(e))
+    }
+    
     render() {
         return (  
-            <div>
-                <Sidebar/>
-                <Albums album={this.state.albums}/>
-                <SingleAlbums/>
+            <div id="main" className="container-fluid">
+              
+                <Albums album={this.state.albums} handleClick={this.handleClick}/>
+                <SingleAlbum singleAlbum={this.state.selectedAlbums}/>
                 <Footer/>
-             </div>
+            </div>
         )
     }; 
 }
