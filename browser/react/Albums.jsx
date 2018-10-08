@@ -3,7 +3,7 @@ import React, {Component} from 'React';
 class Albums extends Component {
     render () {
         return (
-        
+
             <div className="col-xs-10">
             <div className="albums">
                 <h3>Albums</h3>
@@ -28,7 +28,6 @@ class Albums extends Component {
                 </div>
             </div>
         </div>
-
         )
     }
 }

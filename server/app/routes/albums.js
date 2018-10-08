@@ -5,13 +5,33 @@ const mime = require('mime');
 const router = express.Router();
 const models = require('../../db/models');
 const Album = models.Album;
+
 module.exports = router;
+
+const axios = require('axios');
+
+// axios.get('/')
+//   .then(response => {
+//     return response.data;
+//   })
+//   .then(data => {
+//     console.log('success');
+//     console.log(data);
+//   })
+//   .catch(err => {
+//     console.error('error');
+//     console.error(err);
+//   });
+
+// axios.get('/').then(response => console.log(response)).catch(err => console.error('error'))
 
 router.get('/', function (req, res, next) {
   Album.scope('defaultScope', 'songIds').findAll({ where: req.query })
   .then(albums => res.json(albums))
   .catch(next);
 });
+
+
 
 router.param('albumId', function (req, res, next, id) {
   Album.scope('defaultScope', 'populated').findById(id)
