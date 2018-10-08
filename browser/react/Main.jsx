@@ -14,12 +14,14 @@ class Main extends Component {
         this.state = {
             albums: [],
             selectedAlbums: {},
-            currentSong: {}
+            currentSong: {},
+            isPlaying: false
         }
         this.handleClick = this.handleClick.bind(this)
         this.reset = this.reset.bind(this)
         this.start = this.start.bind(this)
         this.currentSong = this.currentSong.bind(this)
+        // this.isPlaying = this.isPlaying.bind(this)
     }
 
     componentDidMount() {
@@ -38,7 +40,8 @@ class Main extends Component {
     
     reset() {
         this.setState({
-            selectedAlbums: {}
+            selectedAlbums: {},
+            isPlayting: false
         })
     }
 
@@ -47,12 +50,17 @@ class Main extends Component {
         audio.src = song.audioUrl;
         audio.load();
         audio.play();
+        this.state.isPlaying = true
     }
 
     currentSong (song) {
         this.setState({
             currentSong: song.id
         })
+    }
+
+    stop(){
+        audio.stop();
     }
 
     render() {
@@ -69,7 +77,12 @@ class Main extends Component {
                     <Albums play={this.start} album={this.state.albums} handleClick={this.handleClick}/> 
                 }
                
-                <Footer play={this.start}/>
+                {
+                    this.state.isPlaying ?
+                    <Footer play={this.start}/> : null
+
+                }
+
             </div>
         )
     }; 

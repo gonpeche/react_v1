@@ -19,23 +19,24 @@ class SingleAlbum extends Component {
                         </tr>
                         </thead>
                         <tbody>
-                        
+
                             {
                                 this.props.singleAlbum.songs && this.props.singleAlbum.songs.map( 
                                     album => {
                                     return (
                                                 <tr className={album.id === this.props.currentSong ? 'active' : ''} key={album.id}>
                                                     <td>
-                                                 
-                                                        <button onClick={() => {
-                                                            this.props.play(album);
-                                                        }} className="btn btn-default btn-xs">
+                                                        {album.id !== this.props.currentSong ?
+                                                            <button onClick={() => {
+                                                                this.props.play(album);
+                                                            }} className="btn btn-default btn-xs">
+                                                                <span className="glyphicon glyphicon-play"></span>
+                                                            </button>
+                                                         : null}
 
-                                                            <span className="glyphicon glyphicon-play"></span>
-                                                        </button>
                                                     </td>
                                                     <td>{album.name}</td>
-                                                    <td>I SHOULD BE A STRING OF THIS SONG'S ARTISTS</td>
+                                                    <td>{album.artists.map(artist => artist.name).join(', ')}</td>
                                                     <td>{album.genre}</td>
                                                 </tr>
                                             )
