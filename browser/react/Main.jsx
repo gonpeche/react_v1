@@ -34,9 +34,16 @@ class Main extends Component {
     render() {
         return (  
             <div id="main" className="container-fluid">
-              
-                <Albums album={this.state.albums} handleClick={this.handleClick}/>
-                <SingleAlbum singleAlbum={this.state.selectedAlbums}/>
+
+                <Sidebar/>  
+
+                {
+                    Object.keys(this.state.selectedAlbums).length ?
+                    <SingleAlbum singleAlbum={this.state.selectedAlbums}/> : 
+                    <Albums album={this.state.albums} handleClick={this.handleClick}/> 
+                }
+               
+                
                 <Footer/>
             </div>
         )
